@@ -174,3 +174,5 @@ cython_debug/
 .DS_Store
 .env
 npm-debug.log
+
+test.db
