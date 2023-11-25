@@ -1,5 +1,4 @@
 from fastapi import FastAPI
-
 import sentry_sdk
 
 sentry_sdk.init(
