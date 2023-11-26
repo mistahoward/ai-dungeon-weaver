@@ -1,13 +1,14 @@
 from pydantic import BaseModel
 
+from common import EpochTime
 class UserResponse(BaseModel):
 	id: int
 	name: str
 	first_name: str
 	last_name: str
 	email: str
-	register_date: int
-	last_login_date: int
+	register_date: EpochTime
+	last_login_date: EpochTime
  
 class UserCreateRequest(BaseModel):
 	name: str
