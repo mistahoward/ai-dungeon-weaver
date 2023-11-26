@@ -8,3 +8,10 @@ class UserResponse(BaseModel):
 	email: str
 	register_date: int
 	last_login_date: int
+ 
+class UserCreateRequest(BaseModel):
+	name: str
+	first_name: str
+	last_name: str
+	email: str
+	password: str
