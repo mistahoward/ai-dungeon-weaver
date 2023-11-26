@@ -22,10 +22,10 @@ def upgrade() -> None:
     op.create_table(
         'user',
         sa.Column('id', sa.Integer, primary_key=True),
-        sa.Column('name', nullable=False),
-        sa.Column('email', nullable=False),
-        sa.Column('password', nullable=False),
-        sa.Column('salt', nullable=False),
+        sa.Column('name', sa.String(255), nullable=False),
+        sa.Column('email', sa.String(50), nullable=False),
+        sa.Column('password', sa.String(255), nullable=False),
+        sa.Column('salt', sa.String(255), nullable=False),
     )
 
 def downgrade() -> None:
