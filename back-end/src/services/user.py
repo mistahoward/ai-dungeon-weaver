@@ -1,13 +1,9 @@
 def user_name_exists(name: str) -> bool:
-	"""
-	Check if a user name exists in the database.
-	"""
+	"""Check if a user name exists in the database."""
 	return True
 
 def email_exists(email: str) -> bool:
-	"""
-	Check if an email exists in the database.
-	"""
+	"""Check if an email exists in the database."""
 	return True
 
 def format_name(name: str) -> str:
@@ -16,11 +12,13 @@ def format_name(name: str) -> str:
 	"""
 	return name.strip().title()
 
+
 def password_has_uppercase(password: str) -> bool:
 	"""
 	Check if a password has an uppercase character.
 	"""
 	return any(char.isupper() for char in password)
+
 
 def password_has_lowercase(password: str) -> bool:
 	"""
