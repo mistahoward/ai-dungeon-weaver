@@ -3,7 +3,7 @@ from schemas import UserResponse, UserCreateRequest
 from sqlalchemy.orm import Session
 from option import Result
 
-from services import get_db, user_exists, password_valid, result_error_handler
+from services import get_db, user_exists, password_valid, result_error_handler, get_current_epoch_time
 from models import User
 
 router = APIRouter()
@@ -17,4 +17,5 @@ async def create_user(user_request: UserCreateRequest, db: Session = Depends(get
     verify_valid_password = password_valid(user_request.password)
     if verify_valid_password is False:
         return Result.Err("Password does not meet requirements")
+    current_epoch_time = get_current_epoch_time()
     return Result.Ok(user_request)
