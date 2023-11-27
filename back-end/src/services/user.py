@@ -61,3 +61,11 @@ def user_exists(user_to_check: UserCreateRequest) -> bool:
 	if email_exists(user_to_check.email):
 		return True
 	return False
+
+def get_user_by_email(email: str, db: Session) -> User:
+	""" Get a user by email. """
+	return db.query(User).filter(User.email == email).first()
+
+def get_user_by_name(name: str, db: Session) -> User:
+	""" Get a user by name. """
+	return db.query(User).filter(User.name == name).first()

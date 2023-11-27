@@ -3,6 +3,7 @@
 		"dunder",
 		"isort",
 		"mccabe",
+		"passlib",
 		"pycodestyle",
 		"pydocstyle"
 	]
