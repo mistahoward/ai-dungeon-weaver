@@ -1,54 +1,15 @@
-src = ["src", "test"]
+[lint]
+select = ["E4", "E7", "E9", "F", "ANN", "E", "W", "C90", "I", "N", "D", "ASYNC"]
 ignore-init-module-imports = true
+preview = true 
 
 [format]
 indent-style = "tab"
-
-[lint]
 preview = true 
-
-[lint.flake8-annotations]
-missing-return-type-class-method = true
-
-[lint.pycodestyle]
-missing-newline-at-end-of-file = true
-blank-line-with-whitespace = true
-missing-whitespace-around-operator = true
-missing-whitespace = true
-is-literal = true
-trailing-whitespace = true
-invalid-escape-sequence = true
 
 [lint.mccabe]
 max-complexity = 2 
 
 [lint.isort]
-missing-required-import = true
-
-[lint.pep8-naming]
-invalid-class-name = true
-invalid-function-name = true
-invalid-argument-name = true
-non-lowercase-variable-in-function = true
-dunder-function-name = true
-mixed-case-variable-in-class-scope = true
-mixed-case-variable-in-global-scope = true
-error-suffix-on-exception-name = true
-invalid-module-name = true
-
-[lint.pydocstyle]
-undocumented-public-module = true
-undocumented-public-class = true
-undocumented-public-method = true
-undocumented-public-function = true
-undocumented-magic-method = true
-undocumented-public-init = true
-fits-on-one-line = true
-no-blank-line-before-function = true
-no-blank-line-after-function = true
-ends-in-period = true
-
-[lint.flake8-async]
-blocking-http-call-in-async-function = true
-open-sleep-or-subprocess-in-async-function = true
-blocking-os-call-in-async-function = true
+force-single-line = true
+lines-between-types = 1
