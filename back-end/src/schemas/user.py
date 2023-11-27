@@ -10,7 +10,7 @@ class UserResponse(BaseModel):
 	register_date: EpochTime
 	last_login_date: EpochTime
 	full_name: str
- 
+
 class UserCreateRequest(BaseModel):
 	name: str
 	first_name: str
