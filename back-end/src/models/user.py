@@ -13,7 +13,6 @@ class User(Base):
     last_name: Mapped[str] = mapped_column(String)
     email: Mapped[EmailStr] = mapped_column(String, unique=True)
     password: Mapped[str] = mapped_column(String)
-    salt: Mapped[str] = mapped_column(String)
     register_date: Mapped[EpochTime] = mapped_column(Integer)
     last_login_date: Mapped[EpochTime] = mapped_column(Integer)
     

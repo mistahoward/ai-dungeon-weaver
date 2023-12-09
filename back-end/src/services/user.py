@@ -1,7 +1,10 @@
 from sqlalchemy.orm import Session
+from sqlalchemy.exc import SQLAlchemyError
 
 from ..models import User
 from ..schemas import UserCreateRequest
+from .common import get_current_epoch_time
+from .user import get_password_hash
 
 def user_name_exists(name: str, db: Session) -> bool:
 	""" Check if a user name exists in the database. """
@@ -69,3 +72,24 @@ def get_user_by_email(email: str, db: Session) -> User:
 def get_user_by_name(name: str, db: Session) -> User:
 	""" Get a user by name. """
 	return db.query(User).filter(User.name == name).first()
+
+def create_new_user_in_database(user_to_create: UserCreateRequest, db: Session) -> User:
+	""" Create a new user in the database. """
+	try:
+		db_user = User(
+			name = user_to_create.name,
+			first_name = format_name(user_to_create.first_name),
+			last_name = format_name(user_to_create.last_name),
+			email = user_to_create.email,
+			password = get_password_hash(user_to_create.password),
+			register_date = get_current_epoch_time(),
+		)
+	
+		db.add(db_user)
+		db.commit()
+		db.refresh(db_user)
+		return db_user
+	except SQLAlchemyError as e:
+		print(e)
+		db.rollback()
+		raise e
