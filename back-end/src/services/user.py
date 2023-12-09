@@ -74,7 +74,7 @@ def get_user_by_name(name: str, db: Session) -> User:
 
 def create_new_user_in_database(user_to_create: UserCreateRequest, db: Session) -> User:
 	""" Create a new user in the database. """
-	from .user import get_password_hash
+	from .auth import get_password_hash
 	try:
 		db_user = User(
 			name = user_to_create.name,
@@ -83,6 +83,7 @@ def create_new_user_in_database(user_to_create: UserCreateRequest, db: Session) 
 			email = user_to_create.email,
 			password = get_password_hash(user_to_create.password),
 			register_date = get_current_epoch_time(),
+			last_login_date = get_current_epoch_time(),
 		)
 	
 		db.add(db_user)
