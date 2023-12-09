@@ -15,10 +15,10 @@ user_router = APIRouter()
 async def create_user(
     user_request: UserCreateRequest, db: Session = Depends(get_db)
 ) -> UserResponse:
-    if user_exists(user_request):
+    if await user_exists(user_request):
         raise HTTPException(status_code=400, detail="User already exists")
 
-    if not password_valid(user_request.password):
+    if not await password_valid(user_request.password):
         raise HTTPException(
             status_code=400, detail="Password does not meet requirements"
         )
