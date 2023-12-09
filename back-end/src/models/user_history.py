@@ -1,10 +1,10 @@
-from base import Base
-from user import User
+from .base import Base
+from .user import User
+from ..schemas import EpochTime, DatabaseOperation
 
 from sqlalchemy import Integer, String, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column
 
-from schemas import EpochTime, DatabaseOperation
 from sqlalchemy.orm import relationship
 class UserHistory(Base):
 	__tablename__ = "user_history"

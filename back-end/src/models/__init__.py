@@ -1,7 +1,7 @@
-from base import DeclarativeBase
-from user import User
+from .base import Base
+from .user import User
 
 __all__ = [
-	"DeclarativeBase",
+	"Base",
 	"User"
 ]

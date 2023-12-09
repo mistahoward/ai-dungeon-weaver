@@ -1,9 +1,9 @@
 from pydantic import EmailStr
-from base import Base
+from .base import Base
 from sqlalchemy import Integer, String
 from sqlalchemy.orm import Mapped, mapped_column
 
-from schemas import EpochTime
+from ..schemas import EpochTime
 class User(Base):
     __tablename__ = "user"
     

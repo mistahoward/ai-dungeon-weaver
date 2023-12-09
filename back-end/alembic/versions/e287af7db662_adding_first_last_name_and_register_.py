@@ -19,10 +19,10 @@ depends_on: Union[str, Sequence[str], None] = None
 
 
 def upgrade() -> None:
-    op.add_column('user', sa.Column('first_name', sa.String(length=255), nullable=True))
-    op.add_column('user', sa.Column('last_name', sa.String(length=255), nullable=True))
-    op.add_column('user', sa.Column('register_date', sa.Integer(), nullable=True))
-    op.add_column('user', sa.Column('last_login_date', sa.Integer(), nullable=True))
+    op.add_column('user', sa.Column('first_name', sa.String(length=255), nullable=False))
+    op.add_column('user', sa.Column('last_name', sa.String(length=255), nullable=False))
+    op.add_column('user', sa.Column('register_date', sa.Integer(), nullable=False))
+    op.add_column('user', sa.Column('last_login_date', sa.Integer(), nullable=False))
 
 def downgrade() -> None:
     op.drop_column('user', 'last_login_date')

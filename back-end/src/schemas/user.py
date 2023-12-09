@@ -1,6 +1,6 @@
 from pydantic import BaseModel, EmailStr
 
-from common import EpochTime
+from .common import EpochTime
 class UserResponse(BaseModel):
 	id: int
 	name: str
