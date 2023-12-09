@@ -1,6 +1,6 @@
 from .user import UserResponse, UserCreateRequest
 from .common import EpochTime, DatabaseOperation
-from .auth import AuthSettings, Token
+from .auth import AuthSettings, Token, AuthAttempt, FailureReason
 
 __all__ = [
 	'UserResponse',
@@ -8,5 +8,7 @@ __all__ = [
 	'EpochTime',
 	'AuthSettings',
 	'Token',
-	'DatabaseOperation'
+	'DatabaseOperation',
+	'AuthAttempt',
+	'FailureReason'
 ]

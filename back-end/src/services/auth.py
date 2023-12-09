@@ -6,7 +6,10 @@ from typing import Optional, Union
 import jwt
 from passlib.context import CryptContext
 
-from ..schemas import Token
+from .user import get_user_by_name
+from .authentication_log import log_auth_attempt
+from ..schemas import Token, AuthAttempt
+from .common import get_current_epoch_time
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -36,13 +39,15 @@ def decode_access_token(token: str) -> dict:
 def handle_login(username: str, password: str, db: Session) -> Optional[Token]:
     # TODO: add logging to auth history table
     """ Handle login attempt. """
-    from ..models import User
     from . import auth_settings
-    from .user import get_user_by_name
+    from ..models import User
+    
     user: Optional[User] = get_user_by_name(username, db)
     if not user:
         return None
     if not verify_password(password, user.password):
+        attempt = AuthAttempt(user_id=user.id, user_agent="test", ip_address="test", success=False, timestamp=get_current_epoch_time())
+        log_auth_attempt(attempt, db)
         return None
     access_token_expires = timedelta(minutes=auth_settings.access_token_expire_minutes)
     access_token = create_access_token(data={"sub": user.name}, expires_delta=access_token_expires)
