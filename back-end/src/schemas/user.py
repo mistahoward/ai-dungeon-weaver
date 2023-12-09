@@ -8,7 +8,7 @@ class UserResponse(BaseModel):
 	last_name: str
 	email: EmailStr
 	register_date: EpochTime
-	last_login_date: EpochTime
+	last_login_date: EpochTime	
 
 class UserCreateRequest(BaseModel):
 	name: str

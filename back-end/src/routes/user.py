@@ -11,7 +11,7 @@ from ..schemas import UserResponse, UserCreateRequest
 
 user_router = APIRouter()
 
-@user_router.post("/user", response_model=UserResponse)
+@user_router.post("/user", response_model=UserResponse, tags=["user"])
 async def create_user(
     user_request: UserCreateRequest, db: Session = Depends(get_db)
 ) -> UserResponse:
