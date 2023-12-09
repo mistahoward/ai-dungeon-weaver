@@ -21,7 +21,7 @@ class User(Base):
     @staticmethod
     def after_insert(_, connection, target):
         from ..services import log_user_history
-        log_user_history(target, connection, DatabaseOperation.CREATE)
+        log_user_history(target, connection, DatabaseOperation.INSERT)
     
     @staticmethod
     def after_update(_, connection, target):

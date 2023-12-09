@@ -89,6 +89,7 @@ def create_new_user_in_database(user_to_create: UserCreateRequest, db: Session) 
 		db.add(db_user)
 		db.commit()
 		db.refresh(db_user)
+		print("db_user: ", db_user)
 		return db_user
 	except SQLAlchemyError as e:
 		print(e)

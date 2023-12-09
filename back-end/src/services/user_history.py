@@ -1,4 +1,5 @@
 from __future__ import annotations
+import traceback
 
 from sqlalchemy import inspect
 from sqlalchemy.orm import Session
@@ -7,6 +8,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from ..models import User
 
 from ..schemas import DatabaseOperation
+
 def log_user_history(user: User, db: Session, operation: DatabaseOperation) -> bool:
 	""" Logs a user history event.
 
@@ -36,15 +38,20 @@ def log_user_history(user: User, db: Session, operation: DatabaseOperation) -> b
 				)
 				for field, old, new in modified_attrs
 			]
+			print("histories: ", histories)
 			db.add_all(histories)
 			db.commit()
 			return True
 		else:
 			user_history = UserHistory(user_id=user.id, operation=operation)
+			print("history: ", user_history)
+
 			db.add(user_history)
 			db.commit()
 			return True
 	except SQLAlchemyError as e:
+		print("hit error block!")
 		print(e)
+		traceback.print_exc()
 		db.rollback()
 		return False
