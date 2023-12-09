@@ -5,16 +5,16 @@ from ..models import User
 from ..schemas import UserCreateRequest
 from .common import get_current_epoch_time
 
-async def user_name_exists(name: str, db: Session) -> bool:
+def user_name_exists(name: str, db: Session) -> bool:
 	""" Check if a user name exists in the database. """
-	db_user = await db.query(User).filter(User.name == name).first()
+	db_user = db.query(User).filter(User.name == name).first()
 	if db_user:
 		return True
 	return False
 
-async def email_exists(email: str, db: Session) -> bool:
+def email_exists(email: str, db: Session) -> bool:
 	""" Check if an email exists in the database. """
-	db_user = await db.query(User).filter(User.email == email).first()
+	db_user = db.query(User).filter(User.email == email).first()
 	if db_user:
 		return True
 	return False
@@ -44,7 +44,7 @@ def password_valid(password: str) -> bool:
 	Check if a password is valid.
 	(One uppercase, one lowercase, one number, one special character, and at least 8 characters long)
 	"""
-	if len.password < 8:
+	if len(password) < 8:
 		return False
 	if not password_has_uppercase(password):
 		return False
@@ -56,23 +56,23 @@ def password_valid(password: str) -> bool:
 		return False
 	return True
 
-async def user_exists(user_to_check: UserCreateRequest) -> bool:
+def user_exists(user_to_check: UserCreateRequest, db: Session) -> bool:
 	""" Check if a user exists in the database.  """
-	if user_name_exists(user_to_check.name):
+	if user_name_exists(user_to_check.name, db):
 		return True
-	if email_exists(user_to_check.email):
+	if email_exists(user_to_check.email, db):
 		return True
 	return False
 
-async def get_user_by_email(email: str, db: Session) -> User:
+def get_user_by_email(email: str, db: Session) -> User:
 	""" Get a user by email. """
-	return await db.query(User).filter(User.email == email).first()
+	return db.query(User).filter(User.email == email).first()
 
-async def get_user_by_name(name: str, db: Session) -> User:
+def get_user_by_name(name: str, db: Session) -> User:
 	""" Get a user by name. """
-	return await db.query(User).filter(User.name == name).first()
+	return db.query(User).filter(User.name == name).first()
 
-async def create_new_user_in_database(user_to_create: UserCreateRequest, db: Session) -> User:
+def create_new_user_in_database(user_to_create: UserCreateRequest, db: Session) -> User:
 	""" Create a new user in the database. """
 	from .user import get_password_hash
 	try:

@@ -1,6 +1,6 @@
 from pydantic import EmailStr
 from sqlalchemy import Integer, String, event
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .base import Base
 from ..schemas import EpochTime, DatabaseOperation
@@ -15,6 +15,8 @@ class User(Base):
     password: Mapped[str] = mapped_column(String)
     register_date: Mapped[EpochTime] = mapped_column(Integer)
     last_login_date: Mapped[EpochTime] = mapped_column(Integer)
+    
+    user_history = relationship("UserHistory", back_populates="user")
     
     @staticmethod
     def after_insert(_, connection, target):
