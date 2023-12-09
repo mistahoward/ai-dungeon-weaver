@@ -5,16 +5,16 @@ from ..models import User
 from ..schemas import UserCreateRequest
 from .common import get_current_epoch_time
 
-def user_name_exists(name: str, db: Session) -> bool:
+async def user_name_exists(name: str, db: Session) -> bool:
 	""" Check if a user name exists in the database. """
-	db_user = db.query(User).filter(User.name == name).first()
+	db_user = await db.query(User).filter(User.name == name).first()
 	if db_user:
 		return True
 	return False
 
-def email_exists(email: str, db: Session) -> bool:
+async def email_exists(email: str, db: Session) -> bool:
 	""" Check if an email exists in the database. """
-	db_user = db.query(User).filter(User.email == email).first()
+	db_user = await db.query(User).filter(User.email == email).first()
 	if db_user:
 		return True
 	return False
@@ -56,7 +56,7 @@ def password_valid(password: str) -> bool:
 		return False
 	return True
 
-def user_exists(user_to_check: UserCreateRequest) -> bool:
+async def user_exists(user_to_check: UserCreateRequest) -> bool:
 	""" Check if a user exists in the database.  """
 	if user_name_exists(user_to_check.name):
 		return True
@@ -64,15 +64,15 @@ def user_exists(user_to_check: UserCreateRequest) -> bool:
 		return True
 	return False
 
-def get_user_by_email(email: str, db: Session) -> User:
+async def get_user_by_email(email: str, db: Session) -> User:
 	""" Get a user by email. """
-	return db.query(User).filter(User.email == email).first()
+	return await db.query(User).filter(User.email == email).first()
 
-def get_user_by_name(name: str, db: Session) -> User:
+async def get_user_by_name(name: str, db: Session) -> User:
 	""" Get a user by name. """
-	return db.query(User).filter(User.name == name).first()
+	return await db.query(User).filter(User.name == name).first()
 
-def create_new_user_in_database(user_to_create: UserCreateRequest, db: Session) -> User:
+async def create_new_user_in_database(user_to_create: UserCreateRequest, db: Session) -> User:
 	""" Create a new user in the database. """
 	from .user import get_password_hash
 	try:
