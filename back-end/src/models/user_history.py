@@ -15,7 +15,7 @@ class UserHistory(Base):
 	field_name: Mapped[str] = mapped_column(String, nullable=True)
 	old_value: Mapped[str] = mapped_column(String, nullable=True)
 	new_value: Mapped[str] = mapped_column(String, nullable=True)
-	date: Mapped[EpochTime] = mapped_column(Integer, default=lambda: get_current_epoch_time())
+	timestamp: Mapped[EpochTime] = mapped_column(Integer, default=lambda: get_current_epoch_time())
 	operation: Mapped[str] = mapped_column(String)
 
 	user: Mapped[User] = relationship("User", back_populates="user_history")
