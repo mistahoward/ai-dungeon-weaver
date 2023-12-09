@@ -1,10 +1,8 @@
 from datetime import timedelta
 import datetime
-from types import UnionType
+from typing import Union
 import jwt
 from passlib.context import CryptContext
-
-from . import auth_settings
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -16,8 +14,9 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     """ Verify a password. """
     return pwd_context.verify(plain_password, hashed_password)
 
-def create_access_token(data: dict, expires_delta: UnionType[timedelta, None] = None) -> str:
+def create_access_token(data: dict, expires_delta: Union[timedelta, None] = None) -> str:
     """ Create an access token. """
+    from . import auth_settings
     to_encode = data.copy()
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
@@ -29,4 +28,5 @@ def create_access_token(data: dict, expires_delta: UnionType[timedelta, None] = 
 
 def decode_access_token(token: str) -> dict:
     """ Decode a given access token. """
+    from . import auth_settings
     return jwt.decode(token, auth_settings.jwt_key, algorithms=[auth_settings.jwt_alg])

@@ -1,10 +1,12 @@
-from common import get_current_epoch_time, get_db, result_error_handler
-from user import user_exists, password_valid
 import os
 from dotenv import load_dotenv
-from auth import get_password_hash, verify_password, create_access_token, get_current_user, oauth2_scheme
 
-from schemas import AuthSettings
+from .common import get_current_epoch_time, get_db, result_error_handler
+from .user import user_exists, password_valid
+from .auth import get_password_hash, verify_password, create_access_token
+from .user_history import log_user_history
+
+from ..schemas import AuthSettings
 
 load_dotenv()
 
@@ -13,7 +15,8 @@ __all__ = [
 	"get_db",
 	"result_error_handler",
 	"user_exists",
-	"password_valid"
+	"password_valid",
+	"log_user_history",
 ]
 
 jwt_key = os.getenv("JWT_KEY")
@@ -28,8 +31,8 @@ if not access_token_expire_minutes:
 	raise ValueError("ACCESS_TOKEN_EXPIRE_MINUTES environment variable not set.")
 
 auth_settings = AuthSettings(
-	secret_key=jwt_key,
-	algorithm=jwt_alg,
+	jwt_key=jwt_key,
+	jwt_alg=jwt_alg,
 	access_token_expire_minutes=access_token_expire_minutes
 )
 
@@ -43,7 +46,7 @@ __all__ = [
 	"get_password_hash",
 	"verify_password",
 	"create_access_token",
-	"get_current_user",
+	# "get_current_user",
 	"get_current_active_user",
-	"oauth2_scheme"
+	# "oauth2_scheme"
 ]

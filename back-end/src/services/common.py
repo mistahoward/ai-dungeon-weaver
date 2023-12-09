@@ -4,8 +4,8 @@ from option import Result
 import time
 from sqlalchemy.orm import Session
 
-from database import session_local
-from schemas import EpochTime
+from ..database import session_local
+from ..schemas import EpochTime
 
 def result_error_handler(endpoint_func):
     """ Decorator to handle Result errors. """

@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 
-from models import User
-from schemas import UserCreateRequest
+from ..models import User
+from ..schemas import UserCreateRequest
 
 def user_name_exists(name: str, db: Session) -> bool:
 	""" Check if a user name exists in the database. """
