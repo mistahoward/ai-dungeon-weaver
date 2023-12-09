@@ -17,6 +17,7 @@ class User(Base):
     last_login_date: Mapped[EpochTime] = mapped_column(Integer)
     
     user_history = relationship("UserHistory", back_populates="user")
+    authentication_log = relationship("AuthenticationLog", back_populates="user")
     
     @staticmethod
     def after_insert(_, connection, target):

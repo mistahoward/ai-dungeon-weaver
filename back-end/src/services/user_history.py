@@ -6,7 +6,6 @@ from sqlalchemy.exc import SQLAlchemyError
 from ..models import User
 
 from ..schemas import DatabaseOperation
-from .common import get_current_epoch_time
 
 def log_user_history(user: User, connection: Connection, operation: DatabaseOperation) -> bool:
 	""" Logs a user history event.

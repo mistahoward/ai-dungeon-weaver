@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 
 from .common import get_current_epoch_time, get_db
 from .user import user_exists, password_valid, create_new_user_in_database
-from .auth import get_password_hash, verify_password, create_access_token
+from .auth import get_password_hash, verify_password, create_access_token, handle_login
 from .user_history import log_user_history
 
 from ..schemas import AuthSettings
@@ -16,7 +16,8 @@ __all__ = [
 	"user_exists",
 	"password_valid",
 	"log_user_history",
-	"create_new_user_in_database"
+	"create_new_user_in_database",
+	"handle_login"
 ]
 
 jwt_key = os.getenv("JWT_KEY")

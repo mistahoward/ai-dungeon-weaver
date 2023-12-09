@@ -1,3 +1,4 @@
+from typing import Optional
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
 
@@ -64,11 +65,11 @@ def user_exists(user_to_check: UserCreateRequest, db: Session) -> bool:
 		return True
 	return False
 
-def get_user_by_email(email: str, db: Session) -> User:
+def get_user_by_email(email: str, db: Session) -> Optional[User]:
 	""" Get a user by email. """
 	return db.query(User).filter(User.email == email).first()
 
-def get_user_by_name(name: str, db: Session) -> User:
+def get_user_by_name(name: str, db: Session) -> Optional[User]:
 	""" Get a user by name. """
 	return db.query(User).filter(User.name == name).first()
 
