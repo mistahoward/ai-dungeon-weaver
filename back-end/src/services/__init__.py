@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 
-from .common import get_current_epoch_time, get_db, result_error_handler
+from .common import get_current_epoch_time, get_db
 from .user import user_exists, password_valid, create_new_user_in_database
 from .auth import get_password_hash, verify_password, create_access_token
 from .user_history import log_user_history
@@ -13,7 +13,6 @@ load_dotenv()
 __all__ = [
 	"get_current_epoch_time",
 	"get_db",
-	"result_error_handler",
 	"user_exists",
 	"password_valid",
 	"log_user_history",

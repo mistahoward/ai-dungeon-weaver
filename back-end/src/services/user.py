@@ -4,7 +4,6 @@ from sqlalchemy.exc import SQLAlchemyError
 from ..models import User
 from ..schemas import UserCreateRequest
 from .common import get_current_epoch_time
-from .user import get_password_hash
 
 def user_name_exists(name: str, db: Session) -> bool:
 	""" Check if a user name exists in the database. """
@@ -75,6 +74,7 @@ def get_user_by_name(name: str, db: Session) -> User:
 
 def create_new_user_in_database(user_to_create: UserCreateRequest, db: Session) -> User:
 	""" Create a new user in the database. """
+	from .user import get_password_hash
 	try:
 		db_user = User(
 			name = user_to_create.name,

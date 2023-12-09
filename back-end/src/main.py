@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 import sentry_sdk
 
+from .routes import user_router
+
 sentry_sdk.init(
     dsn="https://f2b55ea07e5be52b2c66d045a1f66d40@o4506254438694912.ingest.sentry.io/4506254457438208",
     # Set traces_sample_rate to 1.0 to capture 100%
@@ -13,3 +15,5 @@ sentry_sdk.init(
 )
 
 app = FastAPI()
+
+app.include_router(user_router)
