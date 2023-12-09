@@ -1,6 +1,6 @@
 from .base import Base
 from .user import User
-from ..schemas import EpochTime, DatabaseOperation
+from ..schemas import EpochTime
 from ..services import get_current_epoch_time
 
 from sqlalchemy import Integer, String, ForeignKey
@@ -12,10 +12,10 @@ class UserHistory(Base):
 	
 	id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
 	user_id: Mapped[int] = mapped_column(Integer, ForeignKey("user.id"))
-	field_name: Mapped[str] = mapped_column(String)
-	old_value: Mapped[str] = mapped_column(String)
-	new_value: Mapped[str] = mapped_column(String)
+	field_name: Mapped[str] = mapped_column(String, nullable=True)
+	old_value: Mapped[str] = mapped_column(String, nullable=True)
+	new_value: Mapped[str] = mapped_column(String, nullable=True)
 	date: Mapped[EpochTime] = mapped_column(Integer, default=lambda: get_current_epoch_time())
-	operation: Mapped[DatabaseOperation] = mapped_column(String)
+	operation: Mapped[str] = mapped_column(String)
 
 	user: Mapped[User] = relationship("User", back_populates="user_history")

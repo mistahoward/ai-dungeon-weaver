@@ -1,15 +1,14 @@
 from __future__ import annotations
-import traceback
 
-from sqlalchemy import inspect
-from sqlalchemy.orm import Session
+from sqlalchemy import Connection, inspect
 from sqlalchemy.exc import SQLAlchemyError
 
 from ..models import User
 
 from ..schemas import DatabaseOperation
+from .common import get_current_epoch_time
 
-def log_user_history(user: User, db: Session, operation: DatabaseOperation) -> bool:
+def log_user_history(user: User, connection: Connection, operation: DatabaseOperation) -> bool:
 	""" Logs a user history event.
 
 	Args:
@@ -19,6 +18,7 @@ def log_user_history(user: User, db: Session, operation: DatabaseOperation) -> b
 	Returns:
 		bool: Boolean of success
 	"""
+	from ..models import UserHistory
 	try:
 		if operation == DatabaseOperation.UPDATE:
 			inst = inspect(user)
@@ -27,7 +27,6 @@ def log_user_history(user: User, db: Session, operation: DatabaseOperation) -> b
 				for attr in inst.attrs
 				if attr.history.has_changes()
 			]
-			from ..models import UserHistory
 			histories = [
 				UserHistory(
 					user_id=user.id,
@@ -38,20 +37,18 @@ def log_user_history(user: User, db: Session, operation: DatabaseOperation) -> b
 				)
 				for field, old, new in modified_attrs
 			]
-			print("histories: ", histories)
-			db.add_all(histories)
-			db.commit()
+			connection.execute(UserHistory.__table__.insert(), histories)
 			return True
 		else:
 			user_history = UserHistory(user_id=user.id, operation=operation)
-			print("history: ", user_history)
+			connection.execute(UserHistory.__table__.insert().values({
+				'user_id': user_history.user_id,
+				'operation': user_history.operation.value,
+			}))
 
-			db.add(user_history)
-			db.commit()
 			return True
 	except SQLAlchemyError as e:
 		print("hit error block!")
 		print(e)
-		traceback.print_exc()
-		db.rollback()
+		connection.rollback()
 		return False
