@@ -6,7 +6,7 @@ from .user import user_exists, password_valid, create_new_user_in_database
 from .auth import get_password_hash, verify_password, create_access_token, handle_login
 from .user_history import log_user_history
 
-from ..schemas import AuthSettings
+from schemas import AuthSettings
 
 load_dotenv()
 
@@ -20,9 +20,10 @@ __all__ = [
 	"handle_login"
 ]
 
+
 jwt_key = os.getenv("JWT_KEY")
 jwt_alg = os.getenv("JWT_ALG")
-access_token_expire_minutes = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES"))
+access_token_expire_minutes = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES") or "30")
 
 if not jwt_key:
 	raise ValueError("JWT_KEY environment variable not set.")

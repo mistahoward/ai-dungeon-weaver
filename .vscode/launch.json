@@ -11,10 +11,11 @@
                 "--reload",
                 "--port",
                 "8000",
-				"--env-file",
-				"back-end/.env"
+                "--env-file",
+                "back-end/.env"
             ],
-            "jinja": false
+            "jinja": false,
+            "env": {"PYTHONPATH": "${env:PYTHONPATH}"}
         }
     ]
 }

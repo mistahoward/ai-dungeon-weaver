@@ -6,5 +6,8 @@
 		"passlib",
 		"pycodestyle",
 		"pydocstyle"
-	]
+	],
+	"terminal.integrated.env.osx": {
+		"PYTHONPATH": "${workspaceFolder}/back-end/src"
+	},
 }

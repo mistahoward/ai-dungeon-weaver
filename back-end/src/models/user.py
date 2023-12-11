@@ -3,7 +3,8 @@ from sqlalchemy import Integer, String, event
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .base import Base
-from ..schemas import EpochTime, DatabaseOperation
+from schemas import EpochTime, DatabaseOperation
+
 class User(Base):
     __tablename__ = "user"
     
@@ -21,17 +22,17 @@ class User(Base):
     
     @staticmethod
     def after_insert(_, connection, target):
-        from ..services import log_user_history
+        from services import log_user_history
         log_user_history(target, connection, DatabaseOperation.INSERT)
     
     @staticmethod
     def after_update(_, connection, target):
-        from ..services import log_user_history
+        from services import log_user_history
         log_user_history(target, connection, DatabaseOperation.UPDATE)
         
     @staticmethod
     def after_delete(_, connection, target):
-        from ..services import log_user_history
+        from services import log_user_history
         log_user_history(target, connection, DatabaseOperation.DELETE)
         
 event.listen(User, 'after_insert', User.after_insert)

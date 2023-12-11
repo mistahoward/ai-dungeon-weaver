@@ -1,4 +1,5 @@
 from enum import Enum
+from typing import Optional
 from pydantic import BaseModel
 
 from .common import EpochTime
@@ -26,4 +27,4 @@ class AuthAttempt(BaseModel):
 	ip_address: str
 	success: bool
 	timestamp: EpochTime
-	failure_reason: FailureReason = None
+	failure_reason: Optional[FailureReason] = None

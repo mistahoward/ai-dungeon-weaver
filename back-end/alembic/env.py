@@ -8,7 +8,7 @@ from alembic import context
 from dotenv import load_dotenv
 import os
 
-from src.models import Base
+from models import Base
 
 load_dotenv()
 
@@ -31,8 +31,7 @@ target_metadata = Base.metadata
 # can be acquired:
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
-sqlalchemy_url = os.getenv("ALEMBIC_URL")
-print(sqlalchemy_url)
+sqlalchemy_url = os.getenv("ALEMBIC_URL") or ""
 config.set_main_option("sqlalchemy.url", sqlalchemy_url)
 
 def run_migrations_offline() -> None:

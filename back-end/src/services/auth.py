@@ -8,7 +8,7 @@ from passlib.context import CryptContext
 
 from .user import get_user_by_name
 from .authentication_log import log_auth_attempt
-from ..schemas import Token, AuthAttempt, FailureReason
+from schemas import Token, AuthAttempt, FailureReason
 from .common import get_current_epoch_time
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -51,7 +51,7 @@ def handle_login(username: str, password: str, ip: str, user_agent: str, db: Ses
     # TODO: add logging to auth history table
     """Handle login attempt."""
     from . import auth_settings
-    from ..models import User
+    from models import User
 
     user: Optional[User] = get_user_by_name(username, db)
     if not user:
@@ -71,4 +71,4 @@ def handle_login(username: str, password: str, ip: str, user_agent: str, db: Ses
     access_token = create_access_token(
         data={"sub": user.name}, expires_delta=access_token_expires
     )
-    return {"access_token": access_token, "token_type": "bearer"}
+    return Token(access_token=access_token, token_type="bearer")

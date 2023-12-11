@@ -2,8 +2,8 @@ from typing import Optional
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
 
-from ..models import User
-from ..schemas import UserCreateRequest
+from models import User
+from schemas import UserCreateRequest
 from .common import get_current_epoch_time
 
 def user_name_exists(name: str, db: Session) -> bool:

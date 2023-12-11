@@ -1,11 +1,10 @@
 from __future__ import annotations
 
-from sqlalchemy import Connection, inspect
+from sqlalchemy import Connection, insert, inspect
 from sqlalchemy.exc import SQLAlchemyError
 
-from ..models import User
-
-from ..schemas import DatabaseOperation
+from models import User
+from schemas import DatabaseOperation
 
 def log_user_history(user: User, connection: Connection, operation: DatabaseOperation) -> bool:
 	""" Logs a user history event.
@@ -17,7 +16,7 @@ def log_user_history(user: User, connection: Connection, operation: DatabaseOper
 	Returns:
 		bool: Boolean of success
 	"""
-	from ..models import UserHistory
+	from models import UserHistory
 	try:
 		if operation == DatabaseOperation.UPDATE:
 			inst = inspect(user)
@@ -36,14 +35,12 @@ def log_user_history(user: User, connection: Connection, operation: DatabaseOper
 				)
 				for field, old, new in modified_attrs
 			]
-			connection.execute(UserHistory.__table__.insert(), histories)
+			histories_dict = [history.to_dict() for history in histories]
+			connection.execute(insert(UserHistory), histories_dict)
 			return True
 		else:
 			user_history = UserHistory(user_id=user.id, operation=operation)
-			connection.execute(UserHistory.__table__.insert().values({
-				'user_id': user_history.user_id,
-				'operation': user_history.operation.value,
-			}))
+			connection.execute(insert(UserHistory), user_history.to_dict())
 
 			return True
 	except SQLAlchemyError as e:

@@ -1,13 +1,13 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from ..services import (
+from services import (
     get_db,
     user_exists,
     password_valid,
     create_new_user_in_database,
 )
-from ..schemas import UserResponse, UserCreateRequest
+from schemas import UserResponse, UserCreateRequest
 
 user_router = APIRouter()
 
@@ -26,6 +26,6 @@ async def create_user(
 
     try:
         created_user = create_new_user_in_database(user_request, db)
-        return created_user
+        return UserResponse(created_user)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
