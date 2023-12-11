@@ -10,4 +10,7 @@
 	"terminal.integrated.env.osx": {
 		"PYTHONPATH": "${workspaceFolder}/back-end/src"
 	},
+	  "search.exclude": {
+		"**/alembic/*": true
+	  }
 }

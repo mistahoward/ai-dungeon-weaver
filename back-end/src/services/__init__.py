@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 
 from .common import get_current_epoch_time, get_db
 from .user import user_exists, password_valid, create_new_user_in_database
-from .auth import get_password_hash, verify_password, create_access_token, handle_login
+from .auth import get_password_hash, verify_password, create_access_token, handle_login, get_current_user
 from .user_history import log_user_history
 
 from schemas import AuthSettings
@@ -18,6 +18,7 @@ __all__ = [
 	"log_user_history",
 	"create_new_user_in_database",
 	"handle_login"
+	"get_current_user"
 ]
 
 
